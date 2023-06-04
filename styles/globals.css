@@ -64,21 +64,37 @@ body {
 
 input, textarea{
   @apply border border-gray-300 rounded-md px-2 w-full;
-  @apply mb-3 mt-2
+  @apply mb-3 mt-2;
 }
 
 input:focus, textarea:focus{
-  @apply border border-blue-700
+  @apply border border-blue-700;
 }
 
 h1{
-  @apply text-xl text-blue-600 font-bold mb-4
+  @apply text-xl text-blue-600 font-bold mb-4;
 }
 
 label{
-  @apply text-blue-600 font-bold mb-4
+  @apply text-blue-600 font-bold mb-4;
 }
 
 .btn-primary{
-  @apply bg-blue-600 text-white mt-3 w-14 h-8 rounded-md
+  @apply bg-blue-600 text-white mt-3 w-14 h-8 rounded-md;
+}
+
+table.basic-table{
+  @apply w-full;
+}
+
+table.basic-table thead tr td {
+  @apply bg-blue-300 text-black font-bold text-center;
+}
+
+table.basic-table tr td{
+  @apply border border-gray-400 p-2 text-center;
+}
+
+table.basic-table a{
+  @apply bg-blue-600 text-white text-sm py-1 px-2 rounded-md inline-flex gap-2 items-center;
 }
