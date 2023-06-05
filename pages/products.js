@@ -45,7 +45,10 @@ const Products = () => {
                   <td>{product.description}</td>
                   <td>{product.price}</td>
                   <td className='flex gap-2 items-center justify-center'>
-                    <Link href={'/products/edit/' + product._id}>
+                    <Link
+                      href={'/products/edit/' + product._id}
+                      className='btn-edit'
+                    >
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
@@ -62,7 +65,10 @@ const Products = () => {
                       </svg>
                       Edit
                     </Link>
-                    <Link href={'/products/' + product._id}>
+                    <Link
+                      href={'/products/delete/' + product._id}
+                      className='btn-delete'
+                    >
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'

@@ -95,6 +95,22 @@ table.basic-table tr td{
   @apply border border-gray-400 p-2 text-center;
 }
 
-table.basic-table a{
+/* table.basic-table a{
   @apply bg-blue-600 text-white text-sm py-1 px-2 rounded-md inline-flex gap-2 items-center;
+} */
+
+.btn-edit {
+  @apply bg-blue-600 text-white text-sm py-1 px-2 rounded-md inline-flex gap-2 items-center;
+}
+
+.btn-delete {
+  @apply bg-red-700 text-white text-sm py-1 px-2 rounded-md inline-flex gap-2 items-center;
+}
+
+.btn-red {
+  @apply bg-red-600 text-white text-sm py-1 px-4 rounded-md font-bold
+}
+
+.btn-default {
+  @apply bg-gray-500 text-white text-sm py-1 px-4 rounded-md font-bold
 }
