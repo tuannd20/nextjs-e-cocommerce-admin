@@ -12,7 +12,6 @@ const ProductForm = ({
   price: priceItem,
   images: existingImages,
 }) => {
-  console.log('pass id: ', _id);
   const [title, setTitle] = useState(titleItem || '');
   const [description, setDescription] = useState(descriptionItem || '');
   const [price, setPrice] = useState(priceItem || '');
