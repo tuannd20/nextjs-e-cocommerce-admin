@@ -66,12 +66,12 @@ img {
   max-height: 100%;
 }
 
-input, textarea{
+input, textarea, select{
   @apply border border-gray-300 rounded-md px-2 w-full;
   @apply mb-3 mt-2;
 }
 
-input:focus, textarea:focus{
+input:focus, textarea:focus, select:focus{
   @apply border border-blue-700;
 }
 
