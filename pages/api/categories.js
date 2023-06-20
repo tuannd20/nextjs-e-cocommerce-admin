@@ -19,4 +19,22 @@ export default async function handleCategories(req, res) {
     });
     res.json(category);
   }
+
+  if (method === 'PUT') {
+    const { nameCategory, parentCategory, _id } = req.body;
+    const categoryDoc = await Category.updateOne(
+      { _id },
+      {
+        nameCategory,
+        parent: parentCategory,
+      }
+    );
+    res.json(categoryDoc);
+  }
+
+  if (method === 'DELETE') {
+    const { _id } = req.query;
+    await Category.deleteOne({ _id });
+    res.json('Delete success');
+  }
 }

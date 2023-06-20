@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import axios from 'axios';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { withSwal } from 'react-sweetalert2';
 
-export default function categories() {
+const Categories = ({ swal }) => {
+  const [editedCategory, setEditedCategory] = useState(null);
   const [nameCategory, setNameCategory] = useState('');
   const [parentCategory, setParentCategory] = useState('');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     fetchCategories();
-  }, [categories]);
+  }, []);
 
   const fetchCategories = () => {
     axios.get('/api/categories').then((result) => {
@@ -21,14 +22,57 @@ export default function categories() {
 
   const saveCategory = async (ev) => {
     ev.preventDefault();
-    await axios.post('/api/categories', { nameCategory, parentCategory });
+    const payload = { nameCategory, parentCategory };
+    if (editedCategory) {
+      payload._id = editedCategory._id;
+      console.log(payload);
+      await axios.put('/api/categories', payload);
+      setEditedCategory(null);
+    } else {
+      await axios.post('/api/categories', payload);
+    }
     setNameCategory('');
+    setParentCategory('');
+    fetchCategories();
+  };
+
+  const editCategory = (category) => {
+    setEditedCategory(category);
+    setNameCategory(category.nameCategory);
+    setParentCategory(category.parent?._id);
+  };
+
+  const deleteCategory = (category) => {
+    swal
+      .fire({
+        title: 'Are you sure?',
+        text: `Do you want to delete "${category.nameCategory}"?`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, Delete!',
+        confirmButtonColor: '#d55',
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const { _id } = category;
+          await axios.delete('/api/categories?_id=' + _id);
+          fetchCategories();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <Layout>
       <h1>Categories</h1>
-      <label htmlFor=''>New Category name</label>
+      <label htmlFor=''>
+        {editedCategory
+          ? `Edit category "${editedCategory.nameCategory}"`
+          : 'Create new category'}
+      </label>
       <form onSubmit={saveCategory} className='flex gap-1 items-center'>
         <input
           className='mb-0'
@@ -70,7 +114,10 @@ export default function categories() {
                   <td>{category.nameCategory}</td>
                   <td>{category?.parent?.nameCategory}</td>
                   <td className='flex gap-2 items-center justify-center'>
-                    <Link href={''} className='btn-edit'>
+                    <button
+                      className='btn-edit'
+                      onClick={() => editCategory(category)}
+                    >
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
@@ -86,8 +133,11 @@ export default function categories() {
                         />
                       </svg>
                       Edit
-                    </Link>
-                    <Link href={''} className='btn-delete'>
+                    </button>
+                    <button
+                      className='btn-delete'
+                      onClick={() => deleteCategory(category)}
+                    >
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
@@ -103,7 +153,7 @@ export default function categories() {
                         />
                       </svg>
                       Delete
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -112,4 +162,6 @@ export default function categories() {
       </div>
     </Layout>
   );
-}
+};
+
+export default withSwal(({ swal }, ref) => <Categories swal={swal} />);
