@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import UploadForm from '@/components/UploadForm';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -90,6 +91,9 @@ const Products = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div>
+          <UploadForm></UploadForm>
         </div>
       </Layout>
     </div>
